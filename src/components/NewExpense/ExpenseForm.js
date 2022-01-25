@@ -1,97 +1,95 @@
 import React, { useState } from "react";
+
 import "./ExpenseForm.css";
 
 const ExpenseForm = (props) => {
-  const [enterTitle, setEnterTitle] = useState("");
-  const [enterAmount, setEnterAmount] = useState("");
-  const [pickDate, setPickDate] = useState("");
-  /*
-const [userInput, setUserInput] = useState({
-    enterTitle : '',
-    enterAmount : '',
-    enterDate : '',
-})
- */
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredAmount, setEnteredAmount] = useState("");
+  const [enteredDate, setEnteredDate] = useState("");
+  // const [userInput, setUserInput] = useState({
+  //   enteredTitle: '',
+  //   enteredAmount: '',
+  //   enteredDate: '',
+  // });
 
-  const titlechangeHandler = (event) => {
-    /*
-      setUserInput({
-          ...userInput,
-          enterTitle:event.target.value
-      })
-      setUserInput((prevState)=>{
-          return {...prevState, enterTitle: event.target.value};
-      })
-       */
-    setEnterTitle(event.target.value);
+  const titleChangeHandler = (event) => {
+    setEnteredTitle(event.target.value);
+    // setUserInput({
+    //   ...userInput,
+    //   enteredTitle: event.target.value,
+    // });
+    // setUserInput((prevState) => {
+    //   return { ...prevState, enteredTitle: event.target.value };
+    // });
   };
-  const amountChangleHandler = (event) => {
-    /*
-      setUserInput({
-          ...userInput,
-          enterAnount: event.target.value
-      })
-      setUserInput((prevState)=>{
-          return {...prevState, enterAmount: event.target.value};
-      })
-       */
-    setEnterAmount(event.target.value);
+
+  const amountChangeHandler = (event) => {
+    setEnteredAmount(event.target.value);
+    // setUserInput({
+    //   ...userInput,
+    //   enteredAmount: event.target.value,
+    // });
   };
+
   const dateChangeHandler = (event) => {
-    /*
-      setuserInput({
-          ...userInput,
-          enterDate : event.target.value
-      })
-      setUserInput((prevState)=>{
-          return {...prevState, enterDate: event.target.value};
-      })
-       */
-    setPickDate(event.target.value);
+    setEnteredDate(event.target.value);
+    // setUserInput({
+    //   ...userInput,
+    //   enteredDate: event.target.value,
+    // });
   };
+
   const submitHandler = (event) => {
     event.preventDefault();
+
     const expenseData = {
-        title: enterTitle,
-        amount : +enterAmount,
-        date : new Date(pickDate)
+      title: enteredTitle,
+      amount: enteredAmount,
+      date: new Date(enteredDate),
     };
+
     props.onSaveExpenseData(expenseData);
-    setPickDate('');
-    setEnterAmount('');
-    setEnterTitle('');
-  }
+    setEnteredTitle("");
+    setEnteredAmount("");
+    setEnteredDate("");
+  };
 
   return (
     <form onSubmit={submitHandler}>
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-          <input type="text" 
-          onChange={titlechangeHandler} 
-          value={enterTitle} />
+          <input
+            type="text"
+            value={enteredTitle}
+            onChange={titleChangeHandler}
+          />
         </div>
         <div className="new-expense__control">
           <label>Amount</label>
           <input
-            type="text"
+            type="number"
             min="0.01"
             step="0.01"
-            onChange={amountChangleHandler}
-            value={enterAmount}
+            value={enteredAmount}
+            onChange={amountChangeHandler}
           />
         </div>
         <div className="new-expense__control">
-          <label>Title</label>
+          <label>Date</label>
           <input
             type="date"
             min="2019-01-01"
             max="2022-12-31"
+            value={enteredDate}
             onChange={dateChangeHandler}
-            value={pickDate}
           />
         </div>
-        <button type="button" onClick={props.onCancel}>Cancel</button>
+      </div>
+      <div className="new-expense__actions">
+        <button type="button" onClick={props.onCancel}>
+          Cancel
+        </button>
         <button type="submit">Add Expense</button>
       </div>
     </form>
